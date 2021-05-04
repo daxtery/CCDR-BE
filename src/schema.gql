@@ -1,0 +1,510 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Application {
+  match: ID
+  not_match_score: Float
+  pinned: Boolean!
+  type: ApplicationType!
+  user: ID!
+}
+
+enum ApplicationType {
+  Invited
+  Manual
+  Match
+}
+
+type AuthResult {
+  accessToken: String
+  result: Result
+  status: Status!
+  success: Boolean!
+}
+
+type Availability {
+  hours: Float
+  type: AvailabilityType!
+}
+
+input AvailabilityInput {
+  hours: Float
+  type: AvailabilityType!
+}
+
+enum AvailabilityType {
+  FullTime
+  Hours
+  PartTime
+}
+
+input CommunicateUserFinishedProfileDto {
+  id: ID!
+}
+
+type ConfirmationData {
+  confirmed: Boolean!
+  correctCode: String!
+  phoneNumber: String
+  requestType: ConfirmationType!
+}
+
+enum ConfirmationDescription {
+  AlreadyConfirmed
+  Ok
+  Wrong
+}
+
+type ConfirmationResult {
+  description: ConfirmationDescription!
+  present: Boolean!
+}
+
+enum ConfirmationType {
+  Email
+  Phone
+}
+
+input ConfirmationUserDto {
+  confirmationData: String!
+  userId: ID!
+}
+
+input ConfirmationUserRequestDto {
+  confirmationType: ConfirmationType!
+  phoneNumber: String
+  userId: ID!
+}
+
+type Course {
+  _id: ID!
+  name: String!
+}
+
+input CreateCourseDto {
+  name: String!
+}
+
+input CreateHardskillDto {
+  name: String!
+}
+
+input CreateInstitutionDto {
+  creator: ID!
+  description: String!
+  location: LocaleInput!
+  name: String!
+  sector: String!
+}
+
+input CreateLanguageDto {
+  name: String!
+  readingLevels: [LanguageLevelInput!]!
+  speakingLevels: [LanguageLevelInput!]!
+  understandingLevels: [LanguageLevelInput!]!
+  writingLevels: [LanguageLevelInput!]!
+}
+
+input CreateOpeningDto {
+  availability: AvailabilityInput!
+  endDate: DateTime!
+  hardskills: [ID!] = []
+  languages: [ID!] = []
+  location: LocaleInput
+  name: String!
+  remuneration: Float
+  softskills: [ID!] = []
+  startDate: DateTime!
+  tasks: String!
+}
+
+input CreateProjectDto {
+  deadline: DateTime
+  description: String!
+  initialTeam: DateTime
+  institution: ID
+  location: LocaleInput!
+  manager: ID!
+  opening_creations: [CreateOpeningDto!]!
+  scope: String!
+  title: String!
+}
+
+input CreateSoftskillDto {
+  name: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+enum Degree {
+  BACHELOR
+  DOCTORATE
+  MASTER
+}
+
+enum Description {
+  EMAIL_IN_USE
+  OK
+  OK_BUT_INVALID_CODE
+}
+
+type DraftCreateOpening {
+  availability: Availability
+  endDate: DateTime
+  hardskills: [ID!]
+  languages: [ID!]
+  location: Locale
+  name: String
+  remuneration: Float
+  softskills: [ID!]
+  startDate: DateTime
+  tasks: String
+}
+
+input DraftCreateOpeningDto {
+  availability: AvailabilityInput
+  endDate: DateTime
+  hardskills: [ID!]
+  languages: [ID!]
+  location: LocaleInput
+  name: String
+  remuneration: Float
+  softskills: [ID!]
+  startDate: DateTime
+  tasks: String
+}
+
+type DraftProject {
+  _id: ID!
+  deadline: DateTime
+  description: String
+  initialTeam: [User!]!
+  institution: Institution
+  location: Locale
+  manager: User!
+  opening_creations: [DraftCreateOpening!]!
+  scope: String
+  title: String
+}
+
+input DraftProjectDto {
+  deadline: DateTime
+  description: String
+  initialTeam: DateTime
+  institution: ID
+  location: LocaleInput
+  manager: ID!
+  opening_creations: [DraftCreateOpeningDto!]
+  scope: String
+  title: String
+}
+
+type Hardskill {
+  _id: ID!
+  name: String!
+}
+
+type InsertionResult {
+  _id: ID
+  description: Description!
+  success: Boolean!
+}
+
+type Institution {
+  creator: User!
+  description: String!
+  institutionalPage: String
+  location: Locale!
+  name: String!
+  projects: [Project!]!
+  sector: String!
+}
+
+type Language {
+  name: String!
+  readingLevels: [LanguageLevel!]!
+  speakingLevels: [LanguageLevel!]!
+  understandingLevels: [LanguageLevel!]!
+  writingLevels: [LanguageLevel!]!
+}
+
+type LanguageLevel {
+  description: String!
+  name: String!
+}
+
+input LanguageLevelInput {
+  description: String!
+  name: String!
+}
+
+type Locale {
+  address: String!
+  position: Position!
+}
+
+input LocaleInput {
+  address: String!
+  position: PositionInput!
+}
+
+type Mutation {
+  communicateConfirmation(confirmation: ConfirmationUserDto!): ConfirmationResult!
+  communicateConfirmationRequest(confirmationRequest: ConfirmationUserRequestDto!): Boolean!
+  communicateFinishedProfile(user: CommunicateUserFinishedProfileDto!): Boolean!
+  generateAndSetQuizForUser(parameters: SoftQuizRequest!): [SoftSkillQuestion!]!
+  loginEmail(user: UserValidation!): AuthResult!
+  newCourse(course: CreateCourseDto!): Course!
+  newInstitution(institution: CreateInstitutionDto!): Institution!
+  newLanguage(language: CreateLanguageDto!): Language!
+  newOpening(opening: CreateOpeningDto!, project: String!): Opening!
+  newProject(project: CreateProjectDto!): Project!
+  newUser(user: RegisterEmailUserDto!): InsertionResult!
+  registerHardSkill(skill: CreateHardskillDto!): Hardskill!
+  registerMultipleSoftSkills(skills: [CreateSoftskillDto!]!): [Softskill!]!
+  registerMutlipleHardSkills(skills: [CreateHardskillDto!]!): [Hardskill!]!
+  registerSoftskill(softskill: CreateSoftskillDto!): Softskill!
+  saveDraft(draft: DraftProjectDto!): DraftProject!
+  updateUser(user: UpdateUserDto!): User!
+}
+
+type Opening {
+  _id: ID!
+  applications: [Application!]!
+  availability: Availability!
+  endDate: DateTime!
+  hardskills: [Hardskill!]!
+  languages: [Language!]!
+  location: Locale
+  name: String!
+  project: Project!
+  remuneration: Float
+  softskills: [Softskill!]!
+  startDate: DateTime!
+  tasks: String!
+}
+
+type Position {
+  latitude: Float!
+  longitude: Float!
+}
+
+input PositionInput {
+  latitude: Float!
+  longitude: Float!
+}
+
+type Project {
+  _id: ID!
+  admins: [User!]!
+  aliases: [String!]!
+  currentTeam: [User!]!
+  deadline: DateTime
+  description: String!
+  highlighted: Boolean!
+  institution: Institution
+  location: Locale!
+  manager: User!
+  openings: [Opening!]!
+  scope: String!
+  status: ProjectStatus!
+  title: String!
+}
+
+enum ProjectStatus {
+  Closed
+  Open
+}
+
+type Query {
+  getCourses: [Course!]!
+  getHardSkills: [Hardskill!]!
+  getInstitutions: [Institution!]!
+  getLanguages: [Language!]!
+  getProject(id: String!): Project!
+  getProjectDraft(id: String!): DraftProject!
+  getSoftskills: [Softskill!]!
+  getUser(email: String!): User!
+  getUsers: [User!]!
+}
+
+enum QuestionType {
+  Activity
+  Evalulation
+  Potency
+}
+
+input QuestionTypeParameters {
+  count: Int!
+  questionType: QuestionType!
+}
+
+input RegisterEmailUserDto {
+  email: String!
+  emailCode: String
+  password: String!
+}
+
+enum RegistrationStep {
+  DidConfirmation
+  DidProfile
+  DidSoftSkills
+  None
+  RequestedConfirmation
+}
+
+type Result {
+  userId: ID!
+}
+
+input SoftQuizRequest {
+  questionParameters: [QuestionTypeParameters!]!
+  user_id: ID!
+}
+
+type Softskill {
+  _id: ID!
+  name: String!
+}
+
+type SoftSkillQuestion {
+  _id: ID!
+  question: String!
+  questionGroup: String!
+  questionScale: SoftSkillScale!
+  questionType: QuestionType!
+}
+
+type SoftSkillScale {
+  maxValue: Int!
+  maxValueDescription: String!
+  minValue: Int!
+  minValueDescription: String!
+  step: Int!
+}
+
+enum Status {
+  INVALID_EMAIL
+  OK
+  PASSWORD_NOT_MATCH
+}
+
+input UpdateUserDto {
+  availability: AvailabilityInput
+  city: String
+  country: String
+  currentFunction: String
+  dateOfBirth: DateTime
+  email: String
+  experience: [UserExperienceInput!]
+  hardSkills: [UserHardskillInput!]
+  id: ID!
+  institution: ID
+  interests: [String!]
+  languages: [UserLanguageInput!]
+  lastName: String
+  learnings: [UserLearningInput!]
+  name: String
+  password: String
+  softSkillQuizAnswers: [Int!]
+}
+
+type User {
+  _id: ID!
+  availability: Availability
+  city: String
+  confirmationData: ConfirmationData
+  country: String
+  currentFunction: String
+  dateOfBirth: DateTime
+  email: String!
+  experience: [UserExperience!]
+  hardSkills: [UserHardskill!]
+  institution: Institution
+  interests: [String!]
+  languages: [UserLanguage!]
+  lastName: String
+  learnings: [UserLearning!]
+  name: String
+  password: String!
+  projects: [Project!]!
+  registrationStep: RegistrationStep!
+  softSkillQuizAnswers: [Int]
+  softSkillQuizQuestions: [ID]
+  softSkills: [UserSoftskill!]
+}
+
+type UserExperience {
+  company: Institution
+  finishDate: DateTime
+  location: Locale!
+  role: String!
+  startDate: DateTime!
+}
+
+input UserExperienceInput {
+  company: ID
+  finishDate: DateTime
+  location: LocaleInput!
+  role: String!
+  startDate: DateTime!
+}
+
+type UserHardskill {
+  hardskillId: Hardskill!
+  recommendedBy: [User!]!
+  score: Int!
+}
+
+input UserHardskillInput {
+  hardskillId: ID!
+  recommendedBy: [ID!]
+  score: Int!
+}
+
+type UserLanguage {
+  languageId: Language
+  readingLevel: String!
+  speakingLevel: String!
+  understandingLevel: String!
+  writingLevel: String!
+}
+
+input UserLanguageInput {
+  languageId: ID!
+  readingLevel: String!
+  speakingLevel: String!
+  understandingLevel: String!
+  writingLevel: String!
+}
+
+type UserLearning {
+  courseId: Course!
+  degree: Degree!
+  finishDate: DateTime!
+  institution: ID
+  startDate: DateTime!
+}
+
+input UserLearningInput {
+  courseId: ID!
+  degree: Degree!
+  finishDate: DateTime!
+  institution: ID
+  startDate: DateTime!
+}
+
+type UserSoftskill {
+  score: Int!
+  softskillId: Softskill!
+  visible: Boolean!
+}
+
+input UserValidation {
+  email: String!
+  password: String!
+}
