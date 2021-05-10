@@ -1,49 +1,26 @@
 import { InjectQueue } from '@nestjs/bull';
-import { Injectable } from '@nestjs/common';
+import { HttpService, Injectable } from '@nestjs/common';
 import { Queue } from 'bull';
-import { Opening } from 'src/opening/schemas/opening.schema';
-import { User } from 'src/user/schemas/user.schema';
+import { map } from 'rxjs/operators';
+import { beAiConnection } from 'src/config';
+import { Equipment } from 'src/equipment/schemas/equipment.schema';
 
 @Injectable()
 export class FlaskService {
 
-    constructor(@InjectQueue('flask') private readonly flaskQueue: Queue) { }
+    constructor(@InjectQueue('flask') private readonly flaskQueue: Queue,
+        private readonly httpService: HttpService) { }
 
-    async scheduleComputeUserMatches(user_id: User['_id']) {
-        await this.flaskQueue.add('compute_user', {
-            user_id,
+    async scheduleAddEquipmentInCluster(equipment_id: Equipment['_id']) {
+        await this.flaskQueue.add('add_equipment', {
+            equipment_id,
         });
     }
 
-    async scheduleUpdateUserMatches(user_id: User['_id']) {
-        await this.flaskQueue.add('update_user', {
-            user_id,
-        });
-    }
-
-    async scheduleCalculateScoreUserOpening(user_id: User['_id'], opening_id: Opening['_id']) {
-        await this.flaskQueue.add('calculate_score', {
-            user_id,
-            opening_id
-        });
-    }
-
-    async scheduleInsertOpeningToCluster(opening_id: Opening['_id']) {
-        await this.flaskQueue.add('insert_opening', {
-            opening_id,
-        });
-    }
-
-    async scheduleUpdateOpeningInCluster(opening_id: Opening['_id']) {
-        await this.flaskQueue.add('update_opening', {
-            opening_id,
-        });
-    }
-
-    async scheduleDeleteOpeningInCluster(opening_id: Opening['_id']) {
-        await this.flaskQueue.add('delete_opening', {
-            opening_id,
-        });
+    async queryEquipements(query: String) {
+        // FIXME: Handle errors
+        let ranking = this.httpService.get<String[]>(`${beAiConnection}/search/${query}`).pipe(map(response => response.data));
+        return await ranking.toPromise();
     }
 
 }
