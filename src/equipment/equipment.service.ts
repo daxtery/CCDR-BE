@@ -14,18 +14,22 @@ export class EquipmentService {
 
     async addEquipment(equipment_dto: any) {
         const equipment = new this.equipmentModel(equipment_dto);
-        await equipment.save();
+        const saved_equipment = await equipment.save();
+        
         this.flaskService.scheduleAddEquipmentInCluster(equipment._id);
+
+        return saved_equipment
     }
 
     async queryEquipments(query: string) {
         const ids = await this.flaskService.queryEquipements(query);
-        const equipments_promises = ids.map(async id => await this.equipmentModel.findById(id));
-        const equipments = Promise.all(
-            equipments_promises
-        )
+        const equipments_promises = this.equipmentModel.find({_id: {$in: ids}})
 
-        return await equipments;
+        /* const equipments = Promise.all(
+            equipments_promises
+        ) */
+
+        return equipments_promises;
     }
 
 }

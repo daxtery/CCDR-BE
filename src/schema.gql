@@ -2,6 +2,22 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input CreateEquipmentDto {
+  area: String!
+  type: String!
+}
+
+type Equipment {
+  _id: ID!
+  area: String!
+  type: String!
+}
+
+type Mutation {
+  createEquipment(equipment: CreateEquipmentDto!): Equipment!
+}
+
 type Query {
+  queryEquipments(query: String!): Equipment!
   sayHello: String!
 }
