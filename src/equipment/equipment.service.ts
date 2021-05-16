@@ -15,8 +15,8 @@ export class EquipmentService {
     async addEquipment(equipment_dto: any) {
         const equipment = new this.equipmentModel(equipment_dto);
         const saved_equipment = await equipment.save();
-        
-        this.flaskService.scheduleAddEquipmentInCluster(equipment._id);
+
+        //this.flaskService.scheduleAddEquipmentInCluster(equipment._id);
 
         return saved_equipment
     }
