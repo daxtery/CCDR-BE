@@ -19,18 +19,18 @@ export class EquipmentService {
     }
 
     async queryEquipments(query: string) {
-        const { hash, results } = await this.flaskService.queryEquipements(query);
+        const results = await this.flaskService.queryEquipements(query);
 
         const equipments_promises = results.map(async id => await this.equipmentModel.findById(id));
         const equipments = await Promise.all(
             equipments_promises
         )
 
-        return { hash, equipments };
+        return equipments;
     }
 
-    async giveQueryFeedback(query_hash: string, tag: string) {
-        this.flaskService.giveQueryFeedback(query_hash, tag);
+    async giveQueryFeedback(feedback: Map<string, string[]>) {
+        this.flaskService.giveQueryFeedback(feedback);
     }
 
 }

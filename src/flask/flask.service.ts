@@ -19,13 +19,13 @@ export class FlaskService {
 
     async queryEquipements(query: string) {
         // FIXME: Handle errors
-        let results_and_hash = this.httpService.get<{ hash: string, results: string[] }>(`${beAiConnection}/search/${query}`).pipe(map(response => response.data));
-        return await results_and_hash.toPromise();
+        let results = this.httpService.get<string[]>(`${beAiConnection}/search/${query}`).pipe(map(response => response.data));
+        return await results.toPromise();
     }
 
-    async giveQueryFeedback(query_hash: string, tag: string) {
+    async giveQueryFeedback(clicks: Map<string, string[]>) {
         // FIXME: Handle errors
-        return await this.httpService.post(`${beAiConnection}/feedback/${query_hash}/${tag}`).toPromise();
+        return await this.httpService.post(`${beAiConnection}/feedback/`, clicks).toPromise();
     }
 
 }

@@ -1,5 +1,6 @@
-import { Controller, Get, Param, Post, Req, Session } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req, Session } from '@nestjs/common';
 import { EquipmentService } from './equipment.service';
+import { SHA256 } from 'crypto-js';
 
 @Controller()
 export class EquipmentController {
@@ -7,19 +8,15 @@ export class EquipmentController {
     constructor(private readonly equipmentService: EquipmentService) { }
 
     @Get('/search/:q')
-    async queryEquipments(@Session() session: Record<string, any>, @Param('q') query: string) {
-        const { hash, equipments } = await this.equipmentService.queryEquipments(query);
-        session.hash = hash;
-
-        return equipments;
+    async queryEquipments(@Param('q') query: string) {
+        const hash = SHA256(query).toString();
+        const equipements = await this.equipmentService.queryEquipments(query)
+        return { hash, equipements };
     }
 
-    @Post('/feedback/:tag')
-    async giveQueryFeedback(@Session() session: Record<string, any>, @Param('tag') tag: string) {
-        if (session.hash) {
-            const hash: string = session.hash;
-            this.equipmentService.giveQueryFeedback(hash, tag);
-        }
+    @Post('/feedback/')
+    async giveQueryFeedback(@Body() giveQueryFeedbackDto: Map<string, string[]>) {
+        this.equipmentService.giveQueryFeedback(giveQueryFeedbackDto);
     }
 
 }
