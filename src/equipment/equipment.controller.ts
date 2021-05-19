@@ -1,6 +1,5 @@
-import { Body, Controller, Get, Param, Post, Req, Session } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { EquipmentService } from './equipment.service';
-import { SHA256 } from 'crypto-js';
 
 @Controller()
 export class EquipmentController {
@@ -9,9 +8,8 @@ export class EquipmentController {
 
     @Get('/search/:q')
     async queryEquipments(@Param('q') query: string) {
-        const hash = SHA256(query).toString();
         const equipements = await this.equipmentService.queryEquipments(query)
-        return { hash, equipements };
+        return equipements;
     }
 
     @Post('/feedback/')
