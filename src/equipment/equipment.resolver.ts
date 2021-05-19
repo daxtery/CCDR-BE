@@ -20,4 +20,8 @@ export class EquipmentResolver {
         return await this.equipmentService.addEquipment(equipment);
     }
 
+    @Mutation(returns => )
+    async giveQueryFeedback(@Args('queryFeedBack') queryFeedBack: Map<string, string[]>): Promise<void> {
+        this.equipmentService.giveQueryFeedback(queryFeedBack);
+    }
 }

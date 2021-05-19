@@ -17,10 +17,15 @@ export class FlaskService {
         });
     }
 
-    async queryEquipements(query: String) {
+    async queryEquipements(query: string) {
         // FIXME: Handle errors
-        let ranking = this.httpService.get<String[]>(`${beAiConnection}/search/${query}`).pipe(map(response => response.data));
-        return await ranking.toPromise();
+        let results = this.httpService.get<string[]>(`${beAiConnection}/search/${query}`).pipe(map(response => response.data));
+        return await results.toPromise();
+    }
+
+    async giveQueryFeedback(clicks: Map<string, string[]>) {
+        // FIXME: Handle errors
+        return await this.httpService.post(`${beAiConnection}/feedback/`, clicks).toPromise();
     }
 
 }
