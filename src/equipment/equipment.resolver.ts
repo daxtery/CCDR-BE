@@ -9,7 +9,7 @@ export class EquipmentResolver {
 
     constructor(private readonly equipmentService: EquipmentService) { }
 
-    @Query(returns => Equipment)
+    @Query(returns => [Equipment])
     async queryEquipments(@Args('query') query: string): Promise<Equipment[]> {
         return await this.equipmentService.queryEquipments(query);
     }
@@ -20,8 +20,8 @@ export class EquipmentResolver {
         return await this.equipmentService.addEquipment(equipment);
     }
 
-    @Mutation(returns => )
+    /* @Mutation()
     async giveQueryFeedback(@Args('queryFeedBack') queryFeedBack: Map<string, string[]>): Promise<void> {
         this.equipmentService.giveQueryFeedback(queryFeedBack);
-    }
+    } */
 }
