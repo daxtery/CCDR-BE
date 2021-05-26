@@ -4,13 +4,23 @@
 
 input CreateEquipmentDto {
   area: String!
+  extras: ExtrasInput!
   type: String!
 }
 
 type Equipment {
   _id: ID!
   area: String!
+  extras: Extras!
   type: String!
+}
+
+type Extras {
+  name: String!
+}
+
+input ExtrasInput {
+  name: String!
 }
 
 type Mutation {
