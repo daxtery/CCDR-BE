@@ -23,11 +23,22 @@ input ExtrasInput {
   name: String!
 }
 
+input FeedBack {
+  _id: String!
+  clicked: Boolean!
+}
+
 type Mutation {
   createEquipment(equipment: CreateEquipmentDto!): Equipment!
+  giveQueryFeedback(queryFeedBack: QueryFeedBackDto!): Boolean
 }
 
 type Query {
   queryEquipments(query: String!): [Equipment!]!
   sayHello: String!
+}
+
+input QueryFeedBackDto {
+  feedBacks: [FeedBack!]!
+  query: String!
 }

@@ -1,11 +1,23 @@
-import { InputType, Field } from '@nestjs/graphql';
+import { ObjectType, InputType, Field, ID } from '@nestjs/graphql';
+
 
 @InputType()
-export class queryFeedBackDto {
+export class FeedBack {
 
     @Field(type => String, { nullable: false })
-    area: String;
+    _id: String;
 
-    @Field(type => String, { nullable: false })
-    type: String;
+    @Field(type => Boolean, { nullable: false })
+    clicked: Boolean;
 }
+
+@InputType()
+export class QueryFeedBackDto {
+
+    @Field(type => String, { nullable: false })
+    query: String;
+
+    @Field(type => [FeedBack], { nullable: false })
+    feedBacks: Array<FeedBack>;
+}
+

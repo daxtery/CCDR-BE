@@ -29,8 +29,10 @@ export class EquipmentService {
         return equipments_promises;
     }
 
-    async giveQueryFeedback(feedback: Map<string, string[]>) {
-        this.flaskService.giveQueryFeedback(feedback);
+    async giveQueryFeedback(feedback: any) {
+
+        console.log(feedback)
+        //this.flaskService.giveQueryFeedback(feedback);
     }
 
 }
