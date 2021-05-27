@@ -32,17 +32,13 @@ export class EquipmentService {
         return equipments_promises;
     }
 
-    async giveQueryFeedback(feedback: QueryFeedBackDto) {
-        console.log(feedback);
-
+    async storeQueryFeedback(feedback: QueryFeedBackDto) {
         const data: Pick<QueryFeedback, "query" | "feedbacks"> = {
             query: feedback.query,
-            feedbacks: feedback.feedBacks.map(v => {
-                return { equipment_id: v._id, clicked: v.clicked }
+            feedbacks: feedback.feedBacks.map(f => {
+                return { equipment_id: f._id, clicked: f.clicked }
             })
         }
-
-        console.log(data);
 
         return await new this.feedbackModel(data).save();
     }

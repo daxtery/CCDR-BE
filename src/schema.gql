@@ -35,7 +35,7 @@ type Feedback {
 
 type Mutation {
   createEquipment(equipment: CreateEquipmentDto!): Equipment!
-  giveQueryFeedback(queryFeedBack: QueryFeedBackDto!): Boolean
+  storeQueryFeedback(queryFeedBack: QueryFeedBackDto!): Boolean
 }
 
 type Query {
