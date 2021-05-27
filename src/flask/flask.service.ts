@@ -23,9 +23,4 @@ export class FlaskService {
         return await results.toPromise();
     }
 
-    async giveQueryFeedback(clicks: Map<string, string[]>) {
-        // FIXME: Handle errors
-        return await this.httpService.post(`${beAiConnection}/feedback/`, clicks).toPromise();
-    }
-
 }
