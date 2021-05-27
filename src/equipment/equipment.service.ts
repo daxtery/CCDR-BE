@@ -40,7 +40,14 @@ export class EquipmentService {
             })
         }
 
-        return await new this.feedbackModel(data).save();
+        try {
+            await new this.feedbackModel(data).save();
+            return true;
+        }
+        catch (e) {
+            console.error(e);
+            return false;
+        }
     }
 
 }
