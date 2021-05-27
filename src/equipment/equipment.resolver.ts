@@ -22,8 +22,10 @@ export class EquipmentResolver {
     }
 
     @Mutation(returns => Boolean, { nullable: true })
-    async giveQueryFeedback(@Args('queryFeedBack') queryFeedBack: QueryFeedBackDto): Promise<void> {
-        
+    async giveQueryFeedback(@Args('queryFeedBack') queryFeedBack: QueryFeedBackDto): Promise<boolean> {
         this.equipmentService.giveQueryFeedback(queryFeedBack);
+
+        // FIXME: True?
+        return true;
     }
 }

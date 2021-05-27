@@ -5,17 +5,17 @@ import { ObjectType, InputType, Field, ID } from '@nestjs/graphql';
 export class FeedBack {
 
     @Field(type => String, { nullable: false })
-    _id: String;
+    _id: string;
 
     @Field(type => Boolean, { nullable: false })
-    clicked: Boolean;
+    clicked: boolean;
 }
 
 @InputType()
 export class QueryFeedBackDto {
 
     @Field(type => String, { nullable: false })
-    query: String;
+    query: string;
 
     @Field(type => [FeedBack], { nullable: false })
     feedBacks: Array<FeedBack>;

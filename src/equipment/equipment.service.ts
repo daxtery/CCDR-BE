@@ -3,6 +3,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model, Mongoose } from 'mongoose';
 import { FlaskService } from 'src/flask/flask.service';
 import { Equipment } from './schemas/equipment.schema';
+import { QueryFeedBackDto } from './dtos/query-feedback.dto';
+import { Feedback, QueryFeedback } from './schemas/query-feedback.schema';
 
 @Injectable()
 export class EquipmentService {
@@ -10,6 +12,7 @@ export class EquipmentService {
     constructor(
         private readonly flaskService: FlaskService,
         @InjectModel(Equipment.name) private readonly equipmentModel: Model<Equipment>,
+        @InjectModel(QueryFeedback.name) private readonly feedbackModel: Model<QueryFeedback>,
     ) { }
 
     async addEquipment(equipment_dto: any) {
@@ -23,16 +26,25 @@ export class EquipmentService {
 
     async queryEquipments(query: string) {
         const ids = await this.flaskService.queryEquipements(query);
-        
-        const equipments_promises = await this.equipmentModel.find({_id: {$in: ids}});
+
+        const equipments_promises = await this.equipmentModel.find({ _id: { $in: ids } });
 
         return equipments_promises;
     }
 
-    async giveQueryFeedback(feedback: any) {
+    async giveQueryFeedback(feedback: QueryFeedBackDto) {
+        console.log(feedback);
 
-        console.log(feedback)
-        //this.flaskService.giveQueryFeedback(feedback);
+        const data: Pick<QueryFeedback, "query" | "feedbacks"> = {
+            query: feedback.query,
+            feedbacks: feedback.feedBacks.map(v => {
+                return { equipment_id: v._id, clicked: v.clicked }
+            })
+        }
+
+        console.log(data);
+
+        return await new this.feedbackModel(data).save();
     }
 
 }

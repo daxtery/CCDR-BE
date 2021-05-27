@@ -28,6 +28,11 @@ input FeedBack {
   clicked: Boolean!
 }
 
+type Feedback {
+  clicked: Boolean!
+  equipment_id: ID!
+}
+
 type Mutation {
   createEquipment(equipment: CreateEquipmentDto!): Equipment!
   giveQueryFeedback(queryFeedBack: QueryFeedBackDto!): Boolean
