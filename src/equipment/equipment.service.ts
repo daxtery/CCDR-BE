@@ -36,7 +36,7 @@ export class EquipmentService {
         const data: Pick<QueryFeedback, "query" | "feedbacks"> = {
             query: feedback.query,
             feedbacks: feedback.feedBacks.map(f => {
-                return { equipment_id: f._id, clicked: f.clicked }
+                return { equipment_id: f._id, score: f.clicked ? f.score : 0. }
             })
         }
 

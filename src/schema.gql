@@ -26,11 +26,12 @@ input ExtrasInput {
 input FeedBack {
   _id: String!
   clicked: Boolean!
+  score: Float!
 }
 
 type Feedback {
-  clicked: Boolean!
   equipment_id: ID!
+  score: Float!
 }
 
 type Mutation {

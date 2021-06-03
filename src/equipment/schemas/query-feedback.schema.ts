@@ -1,7 +1,7 @@
 import { Prop, Schema, raw, SchemaFactory } from '@nestjs/mongoose'
 import { Document, SchemaTypes } from 'mongoose';
 
-import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { ObjectType, Field, ID, Float } from '@nestjs/graphql';
 
 @ObjectType()
 @Schema()
@@ -11,9 +11,9 @@ export class Feedback {
     @Prop({ type: SchemaTypes.ObjectId, required: true })
     equipment_id: Document['_id'];
 
-    @Field(type => Boolean, { nullable: false })
-    @Prop({ type: Boolean, required: true })
-    clicked: boolean;
+    @Field(type => Float, { nullable: false })
+    @Prop({ type: Number, required: true })
+    score: number;
 }
 
 const FeedbackSchema = SchemaFactory.createForClass(Feedback);
