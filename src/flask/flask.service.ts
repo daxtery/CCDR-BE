@@ -19,7 +19,7 @@ export class FlaskService {
 
     async queryEquipements(query: string) {
         // FIXME: Handle errors
-        let results = this.httpService.get<string[]>(`${beAiConnection}/search/${query}`).pipe(map(response => response.data));
+        let results = this.httpService.get<[string, number][]>(`${beAiConnection}/search/${query}`).pipe(map(response => response.data));
         return await results.toPromise();
     }
 
