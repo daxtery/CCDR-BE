@@ -4,14 +4,15 @@ import { Query, Resolver, Args, Mutation } from "@nestjs/graphql";
 import { Equipment } from './schemas/equipment.schema';
 import { CreateEquipmentDto } from './dtos/create-equipment.dto';
 import { QueryFeedBackDto } from './dtos/query-feedback.dto';
+import { EquipmentResults } from './dtos/equipment-results';
 
 @Resolver()
 export class EquipmentResolver {
 
     constructor(private readonly equipmentService: EquipmentService) { }
 
-    @Query(returns => [Equipment])
-    async queryEquipments(@Args('query') query: string): Promise<Equipment[]> {
+    @Query(returns => [EquipmentResults])
+    async queryEquipments(@Args('query') query: string): Promise<EquipmentResults[]> {
         return await this.equipmentService.queryEquipments(query);
     }
 

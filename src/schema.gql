@@ -15,6 +15,11 @@ type Equipment {
   type: String!
 }
 
+type EquipmentResults {
+  equipment: Equipment!
+  score: Float!
+}
+
 type Extras {
   name: String!
 }
@@ -40,7 +45,7 @@ type Mutation {
 }
 
 type Query {
-  queryEquipments(query: String!): [Equipment!]!
+  queryEquipments(query: String!): [EquipmentResults!]!
   sayHello: String!
 }
 
