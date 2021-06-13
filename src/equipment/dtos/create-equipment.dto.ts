@@ -1,5 +1,6 @@
-import { InputType, Field } from '@nestjs/graphql';
+import { InputType, Field, Int } from '@nestjs/graphql';
 import { Extras } from '../schemas/equipment.schema';
+import { GraphQLJSONObject } from 'graphql-type-json';
 
 @InputType()
 class ExtrasInput {
@@ -19,4 +20,7 @@ export class CreateEquipmentDto {
 
     @Field(type => ExtrasInput, { nullable: false })
     extras: Extras;
+
+    @Field(type => GraphQLJSONObject, { nullable: false })
+    equipmentDetails: Object;
 }

@@ -34,6 +34,7 @@
     "bull": "^3.20.0",
     "graphql": "^15.3.0",
     "graphql-tools": "^6.0.18",
+    "graphql-type-json": "^0.3.2",
     "mongoose": "^5.10.6",
     "nodemailer": "^6.4.11",
     "passport": "^0.4.1",
