@@ -4,15 +4,9 @@ import { GraphQLJSONObject } from 'graphql-type-json';
 
 import { ObjectType, Field, ID, Int } from '@nestjs/graphql';
 
-@ObjectType()
-export class Extras {
-
-    @Field(type => String, { nullable: false })
-    name: String;
-}
 
 @ObjectType()
-@Schema()
+@Schema({ minimize: false }) // We don't minimize so we ALWAYS have an empty extras, at least
 export class Equipment extends Document {
 
     @Field(type => ID, { nullable: false })
@@ -26,14 +20,17 @@ export class Equipment extends Document {
     @Prop({ type: String, required: true })
     type: String;
 
-    @Field(type => Extras, { nullable: false })
+    @Field(type => String, { nullable: false })
     @Prop({ type: Object, required: true })
-    extras: Extras;
+    name: String;
+
+    @Field(type => GraphQLJSONObject, { nullable: false, defaultValue: {} })
+    @Prop({ type: Object, required: true })
+    extras: Object;
 
     @Field(type => GraphQLJSONObject, { nullable: false })
     @Prop({ type: Object, required: true })
     equipmentDetails: Object;
-
 }
 
 export const EquipmentSchema = SchemaFactory.createForClass(Equipment);

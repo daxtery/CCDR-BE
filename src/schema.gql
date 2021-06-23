@@ -5,36 +5,23 @@
 input CreateEquipmentDto {
   area: String!
   equipmentDetails: JSONObject!
-  extras: ExtrasInput!
+  extras: JSONObject!
+  name: String!
   type: String!
-}
-
-input CreateSocialEquipmentDto {
-  capacidade: Int!
-  fins_lucrativos: Boolean!
-  num_utentes: Int!
-  organizacao: String!
 }
 
 type Equipment {
   _id: ID!
   area: String!
   equipmentDetails: JSONObject!
-  extras: Extras!
+  extras: JSONObject!
+  name: String!
   type: String!
 }
 
 type EquipmentResults {
   equipment: Equipment!
   score: Float!
-}
-
-type Extras {
-  name: String!
-}
-
-input ExtrasInput {
-  name: String!
 }
 
 input FeedBack {
@@ -55,7 +42,6 @@ scalar JSONObject @specifiedBy(url: "http://www.ecma-international.org/publicati
 
 type Mutation {
   createEquipment(equipment: CreateEquipmentDto!): Equipment!
-  createSocialEquipment(equipment: CreateSocialEquipmentDto!): Equipment!
   storeQueryFeedback(queryFeedBack: QueryFeedBackDto!): Boolean
 }
 
