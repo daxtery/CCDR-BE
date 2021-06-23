@@ -1,12 +1,13 @@
 import { Prop, Schema, raw, SchemaFactory } from '@nestjs/mongoose'
 import { Document, SchemaTypes } from 'mongoose';
+import { GraphQLJSONObject } from 'graphql-type-json';
 
-import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { ObjectType, Field, ID, Int } from '@nestjs/graphql';
 
 @ObjectType()
 export class Extras {
 
-    @Field(type => String, { nullable: false})
+    @Field(type => String, { nullable: false })
     name: String;
 }
 
@@ -28,6 +29,11 @@ export class Equipment extends Document {
     @Field(type => Extras, { nullable: false })
     @Prop({ type: Object, required: true })
     extras: Extras;
+
+    @Field(type => GraphQLJSONObject, { nullable: false })
+    @Prop({ type: Object, required: true })
+    equipmentDetails: Object;
+
 }
 
 export const EquipmentSchema = SchemaFactory.createForClass(Equipment);

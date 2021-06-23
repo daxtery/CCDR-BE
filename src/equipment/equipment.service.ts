@@ -5,6 +5,7 @@ import { FlaskService } from 'src/flask/flask.service';
 import { Equipment } from './schemas/equipment.schema';
 import { QueryFeedBackDto } from './dtos/query-feedback.dto';
 import { Feedback, QueryFeedback } from './schemas/query-feedback.schema';
+import { EquipmentResults } from './dtos/equipment-results';
 
 @Injectable()
 export class EquipmentService {
@@ -19,24 +20,37 @@ export class EquipmentService {
         const equipment = new this.equipmentModel(equipment_dto);
         const saved_equipment = await equipment.save();
 
-        //this.flaskService.scheduleAddEquipmentInCluster(equipment._id);
+        this.flaskService.scheduleAddEquipmentInCluster(equipment._id);
 
         return saved_equipment
     }
 
     async queryEquipments(query: string) {
-        const ids = await this.flaskService.queryEquipements(query);
+        const results = await this.flaskService.queryEquipements(query);
 
-        const equipments_promises = await this.equipmentModel.find({ _id: { $in: ids } });
+        const ids = results.map((result) => {return result[0]})
 
-        return equipments_promises;
+        const equipments_promises = await this.equipmentModel.find({ _id: { $in: ids } }).exec();
+
+        const equipments_results: Array<EquipmentResults> = results.map( (result) => {
+
+            const id = result[0]
+
+            const score = Number(result[1])
+
+            const equipment = equipments_promises.find((equipment) => {return equipment.id == id})
+
+            return <EquipmentResults> {equipment: equipment, score: score}
+        })
+
+        return equipments_results;
     }
 
     async storeQueryFeedback(feedback: QueryFeedBackDto) {
         const data: Pick<QueryFeedback, "query" | "feedbacks"> = {
             query: feedback.query,
             feedbacks: feedback.feedBacks.map(f => {
-                return { equipment_id: f._id, clicked: f.clicked }
+                return { equipment_id: f._id, score: f.clicked ? f.score : 0. }
             })
         }
 
