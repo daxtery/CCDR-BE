@@ -46,6 +46,7 @@ type Mutation {
 }
 
 type Query {
+  queryById(id: String!): Equipment!
   queryEquipments(query: String!): [EquipmentResults!]!
   sayHello: String!
 }

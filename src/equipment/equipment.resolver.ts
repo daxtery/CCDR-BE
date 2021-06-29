@@ -16,6 +16,11 @@ export class EquipmentResolver {
         return await this.equipmentService.queryEquipments(query);
     }
 
+    @Query(returns => Equipment)
+    async queryById(@Args('id') id: string): Promise<Equipment> {
+        return await this.equipmentService.queryById(id);
+    }
+
     @Mutation(returns => Equipment)
     async createEquipment(@Args('equipment') equipment: CreateEquipmentDto): Promise<Equipment> {
 
