@@ -37,3 +37,4 @@ lerna-debug.log*
 src/config.ts
 
 dump.rdb
+src/schema.gql
