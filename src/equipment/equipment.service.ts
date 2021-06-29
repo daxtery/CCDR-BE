@@ -25,22 +25,26 @@ export class EquipmentService {
         return saved_equipment
     }
 
+    async queryById(id: string) {
+        return await this.equipmentModel.findById(id);
+    }
+
     async queryEquipments(query: string) {
         const results = await this.flaskService.queryEquipements(query);
 
-        const ids = results.map((result) => {return result[0]})
+        const ids = results.map((result) => { return result[0] })
 
         const equipments_promises = await this.equipmentModel.find({ _id: { $in: ids } }).exec();
 
-        const equipments_results: Array<EquipmentResults> = results.map( (result) => {
+        const equipments_results: Array<EquipmentResults> = results.map((result) => {
 
             const id = result[0]
 
             const score = Number(result[1])
 
-            const equipment = equipments_promises.find((equipment) => {return equipment.id == id})
+            const equipment = equipments_promises.find((equipment) => { return equipment.id == id })
 
-            return <EquipmentResults> {equipment: equipment, score: score}
+            return <EquipmentResults>{ equipment: equipment, score: score }
         })
 
         return equipments_results;
