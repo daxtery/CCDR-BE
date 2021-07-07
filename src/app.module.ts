@@ -20,7 +20,7 @@ import { EquipmentModule } from './equipment/equipment.module';
         context: ({ req }) => ({ req }),
       }),
     EquipmentModule,
-    FlaskModule,],
+    FlaskModule],
   providers: [AppResolver],
 })
 export class AppModule { }

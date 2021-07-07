@@ -14,6 +14,10 @@ export class Equipment extends Document {
 
     @Field(type => String, { nullable: false })
     @Prop({ type: String, required: true })
+    group: String;
+
+    @Field(type => String, { nullable: false })
+    @Prop({ type: String, required: true })
     area: String;
 
     @Field(type => String, { nullable: false })

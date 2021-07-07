@@ -8,6 +8,9 @@ export class CreateEquipmentDto {
     area: String;
 
     @Field(type => String, { nullable: false })
+    group: String;
+
+    @Field(type => String, { nullable: false })
     type: String;
 
     @Field(type => String, { nullable: false })
