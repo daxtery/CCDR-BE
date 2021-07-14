@@ -37,7 +37,7 @@ export class Equipment extends Document {
 
     @Field(type => String, { nullable: false })
     @Prop({ type: String, required: true })
-    type: String;
+    description: String;
 
     @Field(type => String, { nullable: false })
     @Prop({ type: Object, required: true })

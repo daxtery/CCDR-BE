@@ -20,7 +20,7 @@ export class CreateEquipmentDto {
     group: String;
 
     @Field(type => String, { nullable: false })
-    type: String;
+    description: String;
 
     @Field(type => String, { nullable: false })
     name: String;
