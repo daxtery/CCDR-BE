@@ -7,6 +7,7 @@ import { join } from 'path';
 import { FlaskModule } from './flask/flask.module';
 import { AppResolver } from './app.resolver';
 import { EquipmentModule } from './equipment/equipment.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { EquipmentModule } from './equipment/equipment.module';
         context: ({ req }) => ({ req }),
       }),
     EquipmentModule,
+    AuthModule,
     FlaskModule],
   providers: [AppResolver],
 })
