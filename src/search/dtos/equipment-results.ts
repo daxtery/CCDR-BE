@@ -1,5 +1,5 @@
 import { ObjectType, Field, Float } from '@nestjs/graphql';
-import { Equipment } from '../schemas/equipment.schema';
+import { Equipment } from '../../equipment/schemas/equipment.schema';
 
 @ObjectType()
 export class EquipmentResults {
