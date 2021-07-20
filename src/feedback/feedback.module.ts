@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { FlaskModule } from 'src/flask/flask.module';
-import { FeedbackService } from './feedback';
+import { FeedbackService } from './feedback.service';
 import { FeedbackResolver } from './feedback.resolver';
 import { QueryFeedback, QueryFeedBackSchema } from './schemas/query-feedback.schema';
 

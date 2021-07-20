@@ -1,6 +1,6 @@
 import { Query, Resolver, Args, Mutation } from "@nestjs/graphql";
 import { QueryFeedBackDto } from './dtos/query-feedback.dto';
-import { FeedbackService } from "./feedback";
+import { FeedbackService } from "./feedback.service";
 
 @Resolver()
 export class FeedbackResolver {
