@@ -30,4 +30,12 @@ export class FeedbackService {
         }
     }
 
+    async removeFeedbackByEquipmentId(id: string) {
+        const result = await this.feedbackModel.updateMany(
+            {},
+            { $pull: { feedbacks: { equipment_id: id } } }
+        );
+        console.log(result);
+    }
+
 }

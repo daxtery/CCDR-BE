@@ -13,6 +13,6 @@ import { QueryFeedback, QueryFeedBackSchema } from './schemas/query-feedback.sch
   ],
   providers: [FeedbackService, FeedbackResolver],
   controllers: [],
-  exports: []
+  exports: [FeedbackService,]
 })
 export class FeedbackModule { }

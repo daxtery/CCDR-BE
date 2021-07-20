@@ -19,4 +19,13 @@ export class EquipmentResolver {
         return await this.equipmentService.addEquipment(equipment);
     }
 
+    @Mutation(returns => Equipment)
+    async updateEquipment(@Args('id') id: string, @Args('equipment') equipment: CreateEquipmentDto) {
+        return await this.equipmentService.updateEquipmentById(id, equipment);
+    }
+
+    @Mutation(returns => Boolean)
+    async removeEquipment(@Args('id') id: string) {
+        return await this.equipmentService.removeEquipmentById(id);
+    }
 }
