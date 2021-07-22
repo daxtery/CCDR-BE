@@ -35,7 +35,18 @@ export class FeedbackService {
             {},
             { $pull: { feedbacks: { equipment_id: id } } }
         );
-        console.log(result);
+    }
+
+    async lastNUniqueQueries(n: number) {
+        const results = await this.feedbackModel.aggregate<{ _id: string }>(
+            [
+                { $sort: { id: -1 } },
+                { $group: { _id: "$query" } },
+                { $limit: n },
+            ]
+        );
+
+        return results.map(r => r._id);
     }
 
 }
