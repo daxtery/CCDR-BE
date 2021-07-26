@@ -30,9 +30,9 @@ export class FlaskService {
         });
     }
 
-    async queryEquipements(query: string) {
+    async queryEquipements(query: string, limit: number) {
         // FIXME: Handle errors
-        let results = this.httpService.get<[string, number][]>(`${beAiConnection}/search/${query}`).pipe(map(response => response.data));
+        let results = this.httpService.get<[string, number][]>(`${beAiConnection}/search/${query}?limit=${limit}`).pipe(map(response => response.data));
         return await results.toPromise();
     }
 
