@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model, Mongoose } from 'mongoose';
 import { EquipmentService } from 'src/equipment/equipment.service';
 import { FlaskService } from 'src/flask/flask.service';
-import { EquipmentResults } from './dtos/equipment-results';
+import { EquipmentResults } from './schemas/equipment-results';
 
 @Injectable()
 export class SearchService {

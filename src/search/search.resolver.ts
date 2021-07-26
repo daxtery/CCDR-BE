@@ -1,5 +1,5 @@
 import { Query, Resolver, Args, Mutation } from "@nestjs/graphql";
-import { EquipmentResults } from "./dtos/equipment-results";
+import { EquipmentResults } from "./schemas/equipment-results";
 import { SearchService } from "./search.service";
 
 @Resolver()
