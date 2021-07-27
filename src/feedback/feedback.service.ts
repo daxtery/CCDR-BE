@@ -38,15 +38,25 @@ export class FeedbackService {
     }
 
     async lastNUniqueQueries(n: number) {
-        const results = await this.feedbackModel.aggregate<{ _id: string }>(
-            [
-                { $sort: { id: -1 } },
-                { $group: { _id: "$query" } },
-                { $limit: n },
-            ]
+        const results = await this.feedbackModel.aggregate<{ query: string }>(
+            [{
+                $group: {
+                    _id: "$query",
+                    id: { $last: "$_id" }
+                }
+            }, {
+                $sort: {
+                    "id": -1
+                }
+            }, {
+                $project: {
+                    "_id": 0,
+                    "query": "$_id"
+                }
+            }]
         );
 
-        return results.map(r => r._id);
+        return results.map(r => r.query);
     }
 
 }
