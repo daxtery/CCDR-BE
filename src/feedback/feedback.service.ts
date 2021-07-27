@@ -52,8 +52,11 @@ export class FeedbackService {
                 $project: {
                     "_id": 0,
                     "query": "$_id"
-                }
-            }]
+                },
+            }, {
+                $limit: n
+            }
+            ]
         );
 
         return results.map(r => r.query);
